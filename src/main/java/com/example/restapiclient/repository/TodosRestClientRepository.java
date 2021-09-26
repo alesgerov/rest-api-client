@@ -7,7 +7,10 @@ import java.util.Optional;
 
 public interface TodosRestClientRepository {
     List<TodoClass> getTodosByUserId(long id);
+
     List<TodoClass> getTodosByCompleted(boolean status);
-    List<TodoClass> getTodosByUserIdAndCompleted(long id,boolean status);
+
+    List<TodoClass> getTodosByUserIdAndCompleted(long id, boolean status);
+
     Optional<TodoClass> getTodoById(long id);
 }

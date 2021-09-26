@@ -1,8 +1,10 @@
 package com.example.restapiclient.controller;
+
 import com.example.restapiclient.errorhandler.ResourceNotFound;
 import com.example.restapiclient.model.Comment;
 import com.example.restapiclient.service.CommentRestClientService;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -47,15 +49,14 @@ public class CommentController {
     }
 
 
-
-    @DeleteMapping(value = {"/{id}","/{id}/"})
-    public Comment deleteComment(@PathVariable("id") long id){
+    @DeleteMapping(value = {"/{id}", "/{id}/"})
+    public Comment deleteComment(@PathVariable("id") long id) {
         return commentService.deleteComment(id);
     }
 
-    @PutMapping(value = {"/{id}","/{id}/"})
+    @PutMapping(value = {"/{id}", "/{id}/"})
     public Comment updateComment(@PathVariable("id") long id,
-                                 @RequestBody Comment comment){
-        return commentService.updateComment(id,comment);
+                                 @RequestBody Comment comment) {
+        return commentService.updateComment(id, comment);
     }
 }

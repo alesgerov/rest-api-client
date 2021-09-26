@@ -58,20 +58,20 @@ public class CommentRestClientService implements CommentsRestClientRepository {
     public Comment deleteComment(long id) {
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.setErrorHandler(errorHandler);
-        System.out.println(id+"silindi");
+        System.out.println(id + "silindi");
         ResponseEntity<Comment> commentResponseEntity = restTemplate.exchange(commentConfig.getCommentsBaseUrl() + "/" + id,
-                HttpMethod.DELETE,HttpEntity.EMPTY,Comment.class);
+                HttpMethod.DELETE, HttpEntity.EMPTY, Comment.class);
         return commentResponseEntity.getBody();
     }
 
     @Override
-    public Comment updateComment(long id,Comment comment) {
+    public Comment updateComment(long id, Comment comment) {
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.setErrorHandler(errorHandler);
-        System.out.println(id+"upddate oldu");
-        HttpEntity<Comment> commentHttpEntity=new HttpEntity<>(comment);
+        System.out.println(id + "upddate oldu");
+        HttpEntity<Comment> commentHttpEntity = new HttpEntity<>(comment);
         ResponseEntity<Comment> commentResponseEntity = restTemplate.exchange(commentConfig.getCommentsBaseUrl() + "/" + id,
-                HttpMethod.PUT,commentHttpEntity,Comment.class);
+                HttpMethod.PUT, commentHttpEntity, Comment.class);
         return commentResponseEntity.getBody();
     }
 

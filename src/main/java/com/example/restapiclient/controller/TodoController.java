@@ -18,32 +18,34 @@ public class TodoController {
         this.clientService = clientService;
     }
 
-    @GetMapping(value = {"/user/{id}","/user/{id}/"})
-    public List<TodoClass> getTodosByUserId(@PathVariable("id") long id){
+    @GetMapping(value = {"/user/{id}", "/user/{id}/"})
+    public List<TodoClass> getTodosByUserId(@PathVariable("id") long id) {
         return clientService.getTodosByUserId(id);
     }
 
 
-    @GetMapping(value = {"/status/{status}","/status/{status}/"})
-    public List<TodoClass> getTodosByUserId(@PathVariable("status") boolean status){
+    @GetMapping(value = {"/status/{status}", "/status/{status}/"})
+    public List<TodoClass> getTodosByUserId(@PathVariable("status") boolean status) {
         return clientService.getTodosByCompleted(status);
     }
 
 
-    @GetMapping(value = {"/",""})
+    @GetMapping(value = {"/", ""})
     public List<TodoClass> getTodosByUserId(@RequestParam("userId") long id,
-                                            @RequestParam("status") boolean status){
-        return clientService.getTodosByUserIdAndCompleted(id,status);
+                                            @RequestParam("status") boolean status) {
+        return clientService.getTodosByUserIdAndCompleted(id, status);
     }
 
 
-    @GetMapping(value = {"/{id}","/{id}/"})
-    public TodoClass getTodosById(@PathVariable("id") long id){
+    @GetMapping(value = {"/{id}", "/{id}/"})
+    public TodoClass getTodosById(@PathVariable("id") long id) {
         try {
-            Optional<TodoClass>todoClass=clientService.getTodoById(id);
+            Optional<TodoClass> todoClass = clientService.getTodoById(id);
             return todoClass.get();
-        }catch (ResourceNotFound e){
+        } catch (ResourceNotFound e) {
             return null;
         }
     }
+
+
 }
