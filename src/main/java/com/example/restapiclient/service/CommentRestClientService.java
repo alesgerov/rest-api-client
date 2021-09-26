@@ -42,4 +42,12 @@ public class CommentRestClientService implements CommentsRestClientRepository {
         return restTemplate.getForObject(commentConfig.getBaseUrl() + "?postId=" + id, List.class);
     }
 
+    @Override
+    public Comment addComment(Comment comment) {
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.setErrorHandler(errorHandler);
+        Comment comment1 = restTemplate.postForObject(commentConfig.getBaseUrl() + "/", comment, Comment.class);
+        return comment1;
+    }
+
 }

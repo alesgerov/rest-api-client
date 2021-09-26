@@ -7,9 +7,8 @@ import java.util.Optional;
 
 public interface CommentsRestClientRepository {
     List<Comment> getAllComments();//TODO paging
-
     Optional<Comment> getCommentById(long id);
-
     List<Comment> getCommentsByPostId(long id);
+    Comment addComment(Comment comment);
 
 }
