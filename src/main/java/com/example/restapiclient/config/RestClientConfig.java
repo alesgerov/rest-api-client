@@ -5,8 +5,9 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@ConfigurationProperties("comments")
+@ConfigurationProperties("apiclient")
 @Data
-public class CommentsRestClientConfig {
-    private String baseUrl;
+public class RestClientConfig {
+    private String commentsBaseUrl;
+    private String todosBaseUrl;
 }

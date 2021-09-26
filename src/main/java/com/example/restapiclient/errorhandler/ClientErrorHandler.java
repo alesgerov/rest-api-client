@@ -8,7 +8,7 @@ import org.springframework.web.client.ResponseErrorHandler;
 import java.io.IOException;
 
 @Component
-public class CommentErrorHandler implements ResponseErrorHandler {
+public class ClientErrorHandler implements ResponseErrorHandler {
     @Override
     public boolean hasError(ClientHttpResponse response) throws IOException {
         return response.getStatusCode().is4xxClientError() || response.getStatusCode().is5xxServerError();
@@ -17,7 +17,7 @@ public class CommentErrorHandler implements ResponseErrorHandler {
     @Override
     public void handleError(ClientHttpResponse response) throws IOException {
         if (response.getStatusCode() == HttpStatus.NOT_FOUND) {
-            throw new ResourceNotFound("Comment not found");
+            throw new ResourceNotFound("Resource not found");
         } else if (response.getStatusCode() == HttpStatus.INTERNAL_SERVER_ERROR) {
             throw new RuntimeException("Server error");
         }

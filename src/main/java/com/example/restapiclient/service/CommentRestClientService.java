@@ -1,7 +1,7 @@
 package com.example.restapiclient.service;
 
-import com.example.restapiclient.config.CommentsRestClientConfig;
-import com.example.restapiclient.errorhandler.CommentErrorHandler;
+import com.example.restapiclient.config.RestClientConfig;
+import com.example.restapiclient.errorhandler.ClientErrorHandler;
 import com.example.restapiclient.model.Comment;
 import com.example.restapiclient.repository.CommentsRestClientRepository;
 import org.springframework.http.HttpEntity;
@@ -16,10 +16,10 @@ import java.util.Optional;
 @Repository
 public class CommentRestClientService implements CommentsRestClientRepository {
 
-    private final CommentsRestClientConfig commentConfig;
-    private final CommentErrorHandler errorHandler;
+    private final RestClientConfig commentConfig;
+    private final ClientErrorHandler errorHandler;
 
-    public CommentRestClientService(CommentsRestClientConfig commentConfig, CommentErrorHandler errorHandler) {
+    public CommentRestClientService(RestClientConfig commentConfig, ClientErrorHandler errorHandler) {
         this.commentConfig = commentConfig;
         this.errorHandler = errorHandler;
     }
@@ -27,14 +27,14 @@ public class CommentRestClientService implements CommentsRestClientRepository {
     @Override
     public List<Comment> getAllComments() {
         RestTemplate restTemplate = new RestTemplate();
-        return restTemplate.getForObject(commentConfig.getBaseUrl(), List.class);
+        return restTemplate.getForObject(commentConfig.getCommentsBaseUrl(), List.class);
     }
 
     @Override
     public Optional<Comment> getCommentById(long id) {
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.setErrorHandler(errorHandler);
-        Comment comment = restTemplate.getForObject(commentConfig.getBaseUrl() + "/" + id, Comment.class);
+        Comment comment = restTemplate.getForObject(commentConfig.getCommentsBaseUrl() + "/" + id, Comment.class);
         return Optional.of(comment);
     }
 
@@ -42,14 +42,14 @@ public class CommentRestClientService implements CommentsRestClientRepository {
     public List<Comment> getCommentsByPostId(long id) {
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.setErrorHandler(errorHandler);
-        return restTemplate.getForObject(commentConfig.getBaseUrl() + "?postId=" + id, List.class);
+        return restTemplate.getForObject(commentConfig.getCommentsBaseUrl() + "?postId=" + id, List.class);
     }
 
     @Override
     public Comment addComment(Comment comment) {
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.setErrorHandler(errorHandler);
-        Comment comment1 = restTemplate.postForObject(commentConfig.getBaseUrl() + "/", comment, Comment.class);
+        Comment comment1 = restTemplate.postForObject(commentConfig.getCommentsBaseUrl() + "/", comment, Comment.class);
         return comment1;
     }
 
@@ -59,7 +59,7 @@ public class CommentRestClientService implements CommentsRestClientRepository {
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.setErrorHandler(errorHandler);
         System.out.println(id+"silindi");
-        ResponseEntity<Comment> commentResponseEntity = restTemplate.exchange(commentConfig.getBaseUrl() + "/" + id,
+        ResponseEntity<Comment> commentResponseEntity = restTemplate.exchange(commentConfig.getCommentsBaseUrl() + "/" + id,
                 HttpMethod.DELETE,HttpEntity.EMPTY,Comment.class);
         return commentResponseEntity.getBody();
     }
@@ -70,7 +70,7 @@ public class CommentRestClientService implements CommentsRestClientRepository {
         restTemplate.setErrorHandler(errorHandler);
         System.out.println(id+"upddate oldu");
         HttpEntity<Comment> commentHttpEntity=new HttpEntity<>(comment);
-        ResponseEntity<Comment> commentResponseEntity = restTemplate.exchange(commentConfig.getBaseUrl() + "/" + id,
+        ResponseEntity<Comment> commentResponseEntity = restTemplate.exchange(commentConfig.getCommentsBaseUrl() + "/" + id,
                 HttpMethod.PUT,commentHttpEntity,Comment.class);
         return commentResponseEntity.getBody();
     }

@@ -1,11 +1,8 @@
 package com.example.restapiclient.controller;
-
-
 import com.example.restapiclient.errorhandler.ResourceNotFound;
 import com.example.restapiclient.model.Comment;
 import com.example.restapiclient.service.CommentRestClientService;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.Optional;
 
