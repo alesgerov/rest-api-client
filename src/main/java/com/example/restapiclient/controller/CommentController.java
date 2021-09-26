@@ -55,4 +55,10 @@ public class CommentController {
     public Comment deleteComment(@PathVariable("id") long id){
         return commentService.deleteComment(id);
     }
+
+    @PutMapping(value = {"/{id}","/{id}/"})
+    public Comment updateComment(@PathVariable("id") long id,
+                                 @RequestBody Comment comment){
+        return commentService.updateComment(id,comment);
+    }
 }

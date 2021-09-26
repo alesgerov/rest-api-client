@@ -64,4 +64,15 @@ public class CommentRestClientService implements CommentsRestClientRepository {
         return commentResponseEntity.getBody();
     }
 
+    @Override
+    public Comment updateComment(long id,Comment comment) {
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.setErrorHandler(errorHandler);
+        System.out.println(id+"upddate oldu");
+        HttpEntity<Comment> commentHttpEntity=new HttpEntity<>(comment);
+        ResponseEntity<Comment> commentResponseEntity = restTemplate.exchange(commentConfig.getBaseUrl() + "/" + id,
+                HttpMethod.PUT,commentHttpEntity,Comment.class);
+        return commentResponseEntity.getBody();
+    }
+
 }

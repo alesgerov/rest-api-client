@@ -11,4 +11,5 @@ public interface CommentsRestClientRepository {
     List<Comment> getCommentsByPostId(long id);
     Comment addComment(Comment comment);
     Comment deleteComment(long id);
+    Comment updateComment(long id,Comment comment);
 }
