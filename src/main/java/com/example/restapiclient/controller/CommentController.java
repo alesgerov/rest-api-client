@@ -50,4 +50,9 @@ public class CommentController {
     }
 
 
+
+    @DeleteMapping(value = {"/{id}","/{id}/"})
+    public Comment deleteComment(@PathVariable("id") long id){
+        return commentService.deleteComment(id);
+    }
 }

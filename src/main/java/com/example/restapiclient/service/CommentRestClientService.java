@@ -4,6 +4,9 @@ import com.example.restapiclient.config.CommentsRestClientConfig;
 import com.example.restapiclient.errorhandler.CommentErrorHandler;
 import com.example.restapiclient.model.Comment;
 import com.example.restapiclient.repository.CommentsRestClientRepository;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.client.RestTemplate;
 
@@ -48,6 +51,17 @@ public class CommentRestClientService implements CommentsRestClientRepository {
         restTemplate.setErrorHandler(errorHandler);
         Comment comment1 = restTemplate.postForObject(commentConfig.getBaseUrl() + "/", comment, Comment.class);
         return comment1;
+    }
+
+
+    @Override
+    public Comment deleteComment(long id) {
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.setErrorHandler(errorHandler);
+        System.out.println(id+"silindi");
+        ResponseEntity<Comment> commentResponseEntity = restTemplate.exchange(commentConfig.getBaseUrl() + "/" + id,
+                HttpMethod.DELETE,HttpEntity.EMPTY,Comment.class);
+        return commentResponseEntity.getBody();
     }
 
 }
