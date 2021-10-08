@@ -1,15 +1,17 @@
 package com.example.restapiclient.controller;
 
 import com.example.restapiclient.errorhandler.ResourceNotFound;
+import com.example.restapiclient.model.ResponseForm;
 import com.example.restapiclient.model.TodoClass;
 import com.example.restapiclient.service.TodoRestClientService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.ArrayList;
 import java.util.Optional;
 
 @RestController
-@RequestMapping(value = {"/client/api/v1/todos", "/client/api/v1/todosh/"})
+@RequestMapping(value = {"/client/api/v1/todos", "/client/api/v1/todos/"})
 public class TodoController {
 
     private final TodoRestClientService clientService;
@@ -18,32 +20,51 @@ public class TodoController {
         this.clientService = clientService;
     }
 
-    @GetMapping(value = {"/user/{id}", "/user/{id}/"})
-    public List<TodoClass> getTodosByUserId(@PathVariable("id") long id) {
-        return clientService.getTodosByUserId(id);
+    @GetMapping(value = {"/user", "/user"})
+    public ResponseEntity<?> getTodosByUserId(@RequestParam(name = "id", defaultValue = "smt") String st) {
+        try {
+            long id = Long.parseLong(st);
+            if (id == 0) return ResponseEntity.status(404).body(new ArrayList<>());
+            return ResponseEntity.ok(clientService.getTodosByUserId(id));
+        } catch (NumberFormatException e) {
+            return ResponseEntity.status(409).body(new ResponseForm("Id is not true"));
+        }
     }
 
 
-    @GetMapping(value = {"/status/{status}", "/status/{status}/"})
-    public List<TodoClass> getTodosByUserId(@PathVariable("status") boolean status) {
-        return clientService.getTodosByCompleted(status);
+    @GetMapping(value = {"/status", "/status"})
+    public ResponseEntity<?> getTodosByStatus(@RequestParam("completed") String completed) {
+
+        boolean status = Boolean.parseBoolean(completed);
+        return ResponseEntity.ok(clientService.getTodosByCompleted(status));
     }
 
 
     @GetMapping(value = {"/", ""})
-    public List<TodoClass> getTodosByUserId(@RequestParam("userId") long id,
-                                            @RequestParam("status") boolean status) {
-        return clientService.getTodosByUserIdAndCompleted(id, status);
+    public ResponseEntity<?> getTodosByUserIdAndStatus(@RequestParam(value = "userId",defaultValue = "smt") String st,
+                                                       @RequestParam(value = "status") String completed) {
+        try {
+            long id = Long.parseLong(st);
+            if (id == 0) return ResponseEntity.status(404).body(new ArrayList<>());
+            boolean status = Boolean.parseBoolean(completed);
+            return ResponseEntity.ok(clientService.getTodosByUserIdAndCompleted(id, status));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(409).body(new ResponseForm("Id or status is not true"));
+        }
     }
 
 
     @GetMapping(value = {"/{id}", "/{id}/"})
-    public TodoClass getTodosById(@PathVariable("id") long id) {
+    public ResponseEntity<?> getTodosById(@PathVariable("id") String st) {
         try {
+            long id = Long.parseLong(st);
+            if (id == 0) return ResponseEntity.status(404).body(new ArrayList<>());
             Optional<TodoClass> todoClass = clientService.getTodoById(id);
-            return todoClass.get();
+            return ResponseEntity.ok(todoClass.get());
+        } catch (IllegalArgumentException i) {
+            return ResponseEntity.status(409).body(new ResponseForm("Id is not true."));
         } catch (ResourceNotFound e) {
-            return null;
+            return ResponseEntity.status(404).body(new ArrayList<>());
         }
     }
 

@@ -1,0 +1,28 @@
+//
+//    @Test
+//    public void testGetTodosByUserStatusFalse() throws Exception{
+//        mockMvc.perform(get("/client/api/v1/todos/status/false"))
+//                .andExpect(status().isOk())
+//                .andExpect(jsonPath("$").isArray())
+//
+//                .andExpect(jsonPath("$[0].userId",equalTo((int) todosFalse.get(0).getUserId())))
+//                .andExpect(jsonPath("$[0].id",equalTo((int) todosFalse.get(0).getId())))
+//                .andExpect(jsonPath("$[0].title",equalTo(todosFalse.get(0).getTitle())))
+//                .andExpect(jsonPath("$[0].completed",equalTo(todosFalse.get(0).isCompleted())))
+//
+//                .andExpect(jsonPath("$[1].userId",equalTo((int) todosFalse.get(1).getUserId())))
+//                .andExpect(jsonPath("$[1].id",equalTo((int) todosFalse.get(1).getId())))
+//                .andExpect(jsonPath("$[1].title",equalTo(todosFalse.get(1).getTitle())))
+//                .andExpect(jsonPath("$[1].completed",equalTo(todosFalse.get(1).isCompleted())))
+//
+//                .andExpect(jsonPath("$[2].userId",equalTo((int) todosFalse.get(2).getUserId())))
+//                .andExpect(jsonPath("$[2].id",equalTo((int) todosFalse.get(2).getId())))
+//                .andExpect(jsonPath("$[2].title",equalTo(todosFalse.get(2).getTitle())))
+//                .andExpect(jsonPath("$[2].completed",equalTo(todosFalse.get(2).isCompleted())));
+//
+//        Mockito.verify(service).getTodosByCompleted(false);
+//        Mockito.verifyNoMoreInteractions(service);
+//
+//    }
+//
+
