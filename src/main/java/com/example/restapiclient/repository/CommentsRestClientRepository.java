@@ -1,6 +1,8 @@
 package com.example.restapiclient.repository;
 
 import com.example.restapiclient.model.Comment;
+import com.example.restapiclient.model.ResponseForm;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 import java.util.Optional;
@@ -14,7 +16,7 @@ public interface CommentsRestClientRepository {
 
     Comment addComment(Comment comment);
 
-    Comment deleteComment(long id);
+    ResponseForm deleteComment(long id);
 
     Comment updateComment(long id, Comment comment);
 }
