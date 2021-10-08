@@ -1,8 +1,9 @@
 package com.example.restapiclient.controller;
 
-
+import com.example.restapiclient.model.Message;
 import com.example.restapiclient.model.TodoClass;
 import com.example.restapiclient.service.TodoRestClientService;
+import com.example.restapiclient.utils.Util;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeAll;
@@ -75,7 +76,7 @@ public class TodoControllerTest {
         assertEquals(200, result.getResponse().getStatus());
 
         String json = result.getResponse().getContentAsString();
-        List<TodoClass> todos = Arrays.asList(jsonToObject(json, TodoClass[].class));
+        List<TodoClass> todos = Arrays.asList(Util.jsonToObject(json, TodoClass[].class));
         assertNotNull(todos);
         assertEquals(todos.size(), this.todosFalse.size());
 
@@ -95,7 +96,7 @@ public class TodoControllerTest {
         assertEquals(200, result.getResponse().getStatus());
 
         String json = result.getResponse().getContentAsString();
-        List<TodoClass> todos = Arrays.asList(jsonToObject(json, TodoClass[].class));
+        List<TodoClass> todos = Arrays.asList(Util.jsonToObject(json, TodoClass[].class));
         assertNotNull(todos);
         assertEquals(todos.size(), this.todosTrue.size());
 
@@ -115,7 +116,7 @@ public class TodoControllerTest {
         assertEquals(200, result.getResponse().getStatus());
 
         String json = result.getResponse().getContentAsString();
-        List<TodoClass> todos = Arrays.asList(jsonToObject(json, TodoClass[].class));
+        List<TodoClass> todos = Arrays.asList(Util.jsonToObject(json, TodoClass[].class));
         assertNotNull(todos);
         assertEquals(todos.size(), this.todosFalse.size());
 
@@ -134,7 +135,7 @@ public class TodoControllerTest {
         MvcResult result = mockMvc.perform(get(uri)).andReturn();
         assertEquals(200, result.getResponse().getStatus());
         String json = result.getResponse().getContentAsString();
-        List<TodoClass> todoClasses = Arrays.asList(jsonToObject(json, TodoClass[].class));
+        List<TodoClass> todoClasses = Arrays.asList(Util.jsonToObject(json, TodoClass[].class));
         assertNotNull(todoClasses);
         assertEquals(todoClasses.size(), this.todosById.size());
 
@@ -152,7 +153,7 @@ public class TodoControllerTest {
         MvcResult result = mockMvc.perform(get(uri)).andReturn();
         assertEquals(404, result.getResponse().getStatus());
         String json = result.getResponse().getContentAsString();
-        List<TodoClass> todoClasses = Arrays.asList(jsonToObject(json, TodoClass[].class));
+        List<TodoClass> todoClasses = Arrays.asList(Util.jsonToObject(json, TodoClass[].class));
         assertEquals(todoClasses, new ArrayList<>());
         Mockito.verifyNoMoreInteractions(service);
     }
@@ -164,7 +165,7 @@ public class TodoControllerTest {
         mockMvc.perform(get(uri))
                 .andExpect(status().is(409))
                 .andExpect(jsonPath("$").isMap())
-                .andExpect(jsonPath("$.message", equalTo("Id is not true")));
+                .andExpect(jsonPath("$.message", equalTo(Message.idIsNotTrue)));
 
         Mockito.verifyNoMoreInteractions(service);
     }
@@ -175,7 +176,7 @@ public class TodoControllerTest {
         MvcResult result = mockMvc.perform(get(uri)).andReturn();
         assertEquals(200, result.getResponse().getStatus());
         String json = result.getResponse().getContentAsString();
-        List<TodoClass> todoClasses = Arrays.asList(jsonToObject(json, TodoClass[].class));
+        List<TodoClass> todoClasses = Arrays.asList(Util.jsonToObject(json, TodoClass[].class));
         assertNotNull(todoClasses);
         assertEquals(todoClasses.size(), this.todosFalse.size());
         for (int i = 0; i < todoClasses.size(); i++) {
@@ -192,7 +193,7 @@ public class TodoControllerTest {
         mockMvc.perform(get(uri))
                 .andExpect(status().is(409))
                 .andExpect(jsonPath("$").isMap())
-                .andExpect(jsonPath("$.message", equalTo("Id or status is not true")));
+                .andExpect(jsonPath("$.message", equalTo(Message.statusAndIdNotTrue)));
 
         Mockito.verifyNoMoreInteractions(service);
     }
@@ -203,7 +204,7 @@ public class TodoControllerTest {
         MvcResult result = mockMvc.perform(get(uri)).andReturn();
         assertEquals(404, result.getResponse().getStatus());
         String json = result.getResponse().getContentAsString();
-        List<TodoClass> todoClasses = Arrays.asList(jsonToObject(json, TodoClass[].class));
+        List<TodoClass> todoClasses = Arrays.asList(Util.jsonToObject(json, TodoClass[].class));
         assertEquals(todoClasses, new ArrayList<>());
         Mockito.verifyNoMoreInteractions(service);
     }
@@ -215,7 +216,7 @@ public class TodoControllerTest {
         MvcResult result=mockMvc.perform(get(uri)).andReturn();
         assertEquals(200,result.getResponse().getStatus());
         String json=result.getResponse().getContentAsString();
-        TodoClass todoClass=jsonToObject(json,TodoClass.class);
+        TodoClass todoClass=Util.jsonToObject(json,TodoClass.class);
         assertNotNull(todoClass);
         assertTodos(todoClass,todo);
         Mockito.verify(service).getTodoById(1);
@@ -229,7 +230,7 @@ public class TodoControllerTest {
         MvcResult result=mockMvc.perform(get(uri)).andReturn();
         assertEquals(404,result.getResponse().getStatus());
         String json = result.getResponse().getContentAsString();
-        List<TodoClass> todoClasses = Arrays.asList(jsonToObject(json, TodoClass[].class));
+        List<TodoClass> todoClasses = Arrays.asList(Util.jsonToObject(json, TodoClass[].class));
         assertEquals(todoClasses, new ArrayList<>());
         Mockito.verifyNoMoreInteractions(service);
     }
@@ -241,7 +242,7 @@ public class TodoControllerTest {
         mockMvc.perform(get(uri))
                 .andExpect(status().is(409))
                 .andExpect(jsonPath("$").isMap())
-                .andExpect(jsonPath("$.message", equalTo("Id is not true.")));
+                .andExpect(jsonPath("$.message", equalTo(Message.idIsNotTrue)));
 
         Mockito.verifyNoMoreInteractions(service);
     }
@@ -256,14 +257,5 @@ public class TodoControllerTest {
     }
 
 
-    private <T> T jsonToObject(String json, Class<T> o) throws JsonProcessingException {
-        ObjectMapper mapper = new ObjectMapper();
-        return mapper.readValue(json, o);
-    }
 
-
-    private String objectToJson(Object o) throws JsonProcessingException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.writeValueAsString(o);
-    }
 }

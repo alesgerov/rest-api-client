@@ -18,8 +18,6 @@ public class ClientErrorHandler implements ResponseErrorHandler {
     public void handleError(ClientHttpResponse response) throws IOException {
         if (response.getStatusCode() == HttpStatus.NOT_FOUND) {
             throw new ResourceNotFound("Resource not found");
-        } else if (response.getStatusCode()==HttpStatus.BAD_REQUEST){
-            throw new TypeMisMatchException("Type not found");
         }else if (response.getStatusCode() == HttpStatus.INTERNAL_SERVER_ERROR) {
             throw new RuntimeException("Server error");
         }

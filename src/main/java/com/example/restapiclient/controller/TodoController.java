@@ -1,6 +1,7 @@
 package com.example.restapiclient.controller;
 
 import com.example.restapiclient.errorhandler.ResourceNotFound;
+import com.example.restapiclient.model.Message;
 import com.example.restapiclient.model.ResponseForm;
 import com.example.restapiclient.model.TodoClass;
 import com.example.restapiclient.service.TodoRestClientService;
@@ -27,7 +28,7 @@ public class TodoController {
             if (id == 0) return ResponseEntity.status(404).body(new ArrayList<>());
             return ResponseEntity.ok(clientService.getTodosByUserId(id));
         } catch (NumberFormatException e) {
-            return ResponseEntity.status(409).body(new ResponseForm("Id is not true"));
+            return ResponseEntity.status(409).body(new ResponseForm(Message.idIsNotTrue));
         }
     }
 
@@ -49,7 +50,7 @@ public class TodoController {
             boolean status = Boolean.parseBoolean(completed);
             return ResponseEntity.ok(clientService.getTodosByUserIdAndCompleted(id, status));
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(409).body(new ResponseForm("Id or status is not true"));
+            return ResponseEntity.status(409).body(new ResponseForm(Message.statusAndIdNotTrue));
         }
     }
 
@@ -62,7 +63,7 @@ public class TodoController {
             Optional<TodoClass> todoClass = clientService.getTodoById(id);
             return ResponseEntity.ok(todoClass.get());
         } catch (IllegalArgumentException i) {
-            return ResponseEntity.status(409).body(new ResponseForm("Id is not true."));
+            return ResponseEntity.status(409).body(new ResponseForm(Message.idIsNotTrue));
         } catch (ResourceNotFound e) {
             return ResponseEntity.status(404).body(new ArrayList<>());
         }

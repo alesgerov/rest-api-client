@@ -2,7 +2,10 @@ package com.example.restapiclient.service;
 
 import com.example.restapiclient.config.RestClientConfig;
 import com.example.restapiclient.errorhandler.ClientErrorHandler;
+import com.example.restapiclient.errorhandler.ResourceNotFound;
 import com.example.restapiclient.model.Comment;
+import com.example.restapiclient.model.Message;
+import com.example.restapiclient.model.ResponseForm;
 import com.example.restapiclient.repository.CommentsRestClientRepository;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
@@ -55,13 +58,13 @@ public class CommentRestClientService implements CommentsRestClientRepository {
 
 
     @Override
-    public Comment deleteComment(long id) {
+    public ResponseForm deleteComment(long id) {
         RestTemplate restTemplate = new RestTemplate();
+        if (getCommentById(id).isEmpty()) throw new ResourceNotFound(Message.commentNotFound);
         restTemplate.setErrorHandler(errorHandler);
-        System.out.println(id + "silindi");
-        ResponseEntity<Comment> commentResponseEntity = restTemplate.exchange(commentConfig.getCommentsBaseUrl() + "/" + id,
+        restTemplate.exchange(commentConfig.getCommentsBaseUrl() + "/" + id,
                 HttpMethod.DELETE, HttpEntity.EMPTY, Comment.class);
-        return commentResponseEntity.getBody();
+        return new ResponseForm(Message.commentDeleted);
     }
 
     @Override
