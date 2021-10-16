@@ -211,7 +211,7 @@ public class TodoControllerTest {
 
 
     @Test
-    public void testGetTodosById() throws Exception{
+    public void testGetTodoById() throws Exception{
         String uri = "/client/api/v1/todos/1";
         MvcResult result=mockMvc.perform(get(uri)).andReturn();
         assertEquals(200,result.getResponse().getStatus());
@@ -225,7 +225,7 @@ public class TodoControllerTest {
 
 
     @Test
-    public void testGetTodosByIdWhenIdEqualZero() throws Exception{
+    public void testGetTodoByIdWhenIdEqualZero() throws Exception{
         String uri = "/client/api/v1/todos/0";
         MvcResult result=mockMvc.perform(get(uri)).andReturn();
         assertEquals(404,result.getResponse().getStatus());

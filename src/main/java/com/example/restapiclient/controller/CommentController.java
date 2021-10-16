@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 @RequestMapping(value = {"/client/api/v1/comments", "/client/api/v1/comments/"})
@@ -29,15 +28,14 @@ public class CommentController {
     }
 
     @DeleteMapping(value = {"/{id}", "/{id}/"})
-    public ResponseEntity<?> deleteComment(@PathVariable("id") String  id) {
+    public ResponseEntity<?> deleteComment(@PathVariable("id") String id) {
         try {
-            long longId=Long.parseLong(id);
-//            Optional<Comment> optionalComment=commentService.getCommentById(longId);
+            long longId = Long.parseLong(id);
             return ResponseEntity.status(200).body(commentService.deleteComment(longId));
-        }catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             e.printStackTrace();
             return ResponseEntity.status(409).body(new ResponseForm(Message.idIsNotTrue));
-        }catch (ResourceNotFound r){
+        } catch (ResourceNotFound r) {
             r.printStackTrace();
             return ResponseEntity.status(409).body(new ResponseForm(Message.commentNotFound));
         }
@@ -45,14 +43,18 @@ public class CommentController {
 
 
     @GetMapping(value = {"/{id}", "/{id}/"})
-    public ResponseEntity<?> getCommentById(@PathVariable("id") long id) {
+    public ResponseEntity<?> getCommentById(@PathVariable("id") String stId) {
         try {
+            long id=Long.parseLong(stId);
             Optional<Comment> optionalComment = commentService.getCommentById(id);
+            if (optionalComment.isEmpty()) {
+                return ResponseEntity.status(409).body(new ResponseForm(Message.commentNotFound));
+            }
             return ResponseEntity.ok().body(optionalComment.get());
         } catch (ResourceNotFound e) {
             System.out.println(e.getMessage());
             return ResponseEntity.status(404).body(new ArrayList<>());
-        }catch (IllegalArgumentException e){
+        } catch (NumberFormatException e) {
             e.printStackTrace();
             return ResponseEntity.status(409).body(new ResponseForm(Message.idIsNotTrue));
         }
@@ -62,12 +64,12 @@ public class CommentController {
     @GetMapping("/post")
     public ResponseEntity<?> getCommentsByPostId(@RequestParam("id") String id) {
         try {
-            long postId=Long.parseLong(id);
+            long postId = Long.parseLong(id);
             return ResponseEntity.ok(commentService.getCommentsByPostId(postId));
-        }catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException  e) {
             e.printStackTrace();
             return ResponseEntity.status(409).body(new ResponseForm(Message.idIsNotTrue));
-        }catch (ResourceNotFound r){
+        } catch (ResourceNotFound r) {
             r.printStackTrace();
             return ResponseEntity.status(404).body(new ArrayList<>());
         }
@@ -81,15 +83,15 @@ public class CommentController {
 
 
     @PutMapping(value = {"/{id}", "/{id}/"})
-    public ResponseEntity<?> updateComment(@PathVariable("id") String  id,
-                                 @RequestBody Comment comment) {
+    public ResponseEntity<?> updateComment(@PathVariable("id") String id,
+                                           @RequestBody Comment comment) {
         try {
-            long longId=Long.parseLong(id);
-            return ResponseEntity.ok(commentService.updateComment(longId,comment));
-        }catch (ResourceNotFound r){
+            long longId = Long.parseLong(id);
+            return ResponseEntity.ok(commentService.updateComment(longId, comment));
+        } catch (ResourceNotFound r) {
             r.printStackTrace();
             return ResponseEntity.status(404).body(new ResponseForm(Message.commentNotFound));
-        }catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             e.printStackTrace();
             return ResponseEntity.status(409).body(new ResponseForm(Message.idIsNotTrue));
         }

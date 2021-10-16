@@ -56,7 +56,7 @@ public class TodoController {
 
 
     @GetMapping(value = {"/{id}", "/{id}/"})
-    public ResponseEntity<?> getTodosById(@PathVariable("id") String st) {
+    public ResponseEntity<?> getTodoById(@PathVariable("id") String st) {
         try {
             long id = Long.parseLong(st);
             if (id == 0) return ResponseEntity.status(404).body(new ArrayList<>());

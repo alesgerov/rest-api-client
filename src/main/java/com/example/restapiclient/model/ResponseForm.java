@@ -7,6 +7,6 @@ import java.io.Serializable;
 
 @Data
 @AllArgsConstructor
-public class ResponseForm  implements Serializable {
+public class ResponseForm  {
     private String message;
 }
