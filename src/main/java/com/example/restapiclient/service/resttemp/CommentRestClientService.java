@@ -1,4 +1,4 @@
-package com.example.restapiclient.service;
+package com.example.restapiclient.service.resttemp;
 
 import com.example.restapiclient.config.RestClientConfig;
 import com.example.restapiclient.errorhandler.ClientErrorHandler;

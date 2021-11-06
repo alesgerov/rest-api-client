@@ -1,6 +1,7 @@
 package com.example.restapiclient.repository;
 
 import com.example.restapiclient.model.TodoClass;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;

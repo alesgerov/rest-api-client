@@ -4,7 +4,7 @@ package com.example.restapiclient.controller;
 import com.example.restapiclient.model.Comment;
 import com.example.restapiclient.model.Message;
 import com.example.restapiclient.model.ResponseForm;
-import com.example.restapiclient.service.CommentRestClientService;
+import com.example.restapiclient.service.resttemp.CommentRestClientService;
 import com.example.restapiclient.utils.Util;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -161,7 +160,6 @@ public class CommentControllerTest {
                 .andExpect(jsonPath("$.message", equalTo(Message.idIsNotTrue)));
         Mockito.verifyNoMoreInteractions(commentService);
     }
-
 
     private void assertComment(Comment comment1, Comment comment2) {
         assertEquals(comment1.getId(), comment2.getId());

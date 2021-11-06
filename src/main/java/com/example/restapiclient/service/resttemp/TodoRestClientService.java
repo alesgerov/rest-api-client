@@ -1,10 +1,11 @@
-package com.example.restapiclient.service;
+package com.example.restapiclient.service.resttemp;
 
 import com.example.restapiclient.config.RestClientConfig;
 import com.example.restapiclient.errorhandler.ClientErrorHandler;
 import com.example.restapiclient.model.TodoClass;
 import com.example.restapiclient.repository.TodosRestClientRepository;
 import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;

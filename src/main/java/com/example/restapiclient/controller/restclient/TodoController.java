@@ -1,10 +1,10 @@
-package com.example.restapiclient.controller;
+package com.example.restapiclient.controller.restclient;
 
 import com.example.restapiclient.errorhandler.ResourceNotFound;
 import com.example.restapiclient.model.Message;
 import com.example.restapiclient.model.ResponseForm;
 import com.example.restapiclient.model.TodoClass;
-import com.example.restapiclient.service.TodoRestClientService;
+import com.example.restapiclient.service.resttemp.TodoRestClientService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,6 +20,7 @@ public class TodoController {
     public TodoController(TodoRestClientService clientService) {
         this.clientService = clientService;
     }
+
 
     @GetMapping(value = {"/user", "/user"})
     public ResponseEntity<?> getTodosByUserId(@RequestParam(name = "id", defaultValue = "smt") String st) {

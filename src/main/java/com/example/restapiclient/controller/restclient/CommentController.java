@@ -1,10 +1,10 @@
-package com.example.restapiclient.controller;
+package com.example.restapiclient.controller.restclient;
 
 import com.example.restapiclient.errorhandler.ResourceNotFound;
 import com.example.restapiclient.model.Comment;
 import com.example.restapiclient.model.Message;
 import com.example.restapiclient.model.ResponseForm;
-import com.example.restapiclient.service.CommentRestClientService;
+import com.example.restapiclient.service.resttemp.CommentRestClientService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface CommentsRestClientRepository {
+
     List<Comment> getAllComments();
 
     Optional<Comment> getCommentById(long id);

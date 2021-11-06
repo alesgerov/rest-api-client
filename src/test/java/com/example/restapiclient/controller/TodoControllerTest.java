@@ -2,11 +2,8 @@ package com.example.restapiclient.controller;
 
 import com.example.restapiclient.model.Message;
 import com.example.restapiclient.model.TodoClass;
-import com.example.restapiclient.service.TodoRestClientService;
+import com.example.restapiclient.service.resttemp.TodoRestClientService;
 import com.example.restapiclient.utils.Util;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
